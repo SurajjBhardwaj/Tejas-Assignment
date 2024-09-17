@@ -1,11 +1,14 @@
-import React from 'react'
 
-const page = () => {
+import React from "react";
+
+import Dashboard from "./dashboard"; // Ensure this path is correct
+
+const Page = () => {
+
   return (
-    <div>
-      DashBoard
-    </div>
-  )
-}
+   
+      <Dashboard />
+  );
+};
 
-export default page
+export default Page;
