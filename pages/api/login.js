@@ -13,9 +13,9 @@ export default async function login(req, res) {
   await connectDB();
 
   // Extract data from request body
-  const { email, password } = req.body;
+  const { email, password, location } = req.body;
 
-  console.log(email, password);
+  console.log(email, password, location);
 
   // Check if the user exists
   const userCheck = await usermodel.findOne({ email });
