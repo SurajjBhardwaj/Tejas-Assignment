@@ -20,6 +20,10 @@ const userSchema = new mongoose.Schema(
       required: true,
     },
     jobs: [],
+    appliedJobs: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Job",
+    }],
     session: [
       {
         token: { type: String },
