@@ -104,7 +104,7 @@ const LoginForm = () => {
             {isLoading ? "Logging in..." : "Login"}
           </button>
           <p className="text-center">
-            Don't have an account?{" "}
+            Don&#39;t have an account?{" "}
             <span
               className="text-blue-500 cursor-pointer hover:underline"
               onClick={handleSignupClick}
