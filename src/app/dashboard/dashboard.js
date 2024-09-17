@@ -11,6 +11,10 @@ const Dashboard = ({ jobsData }) => {
   const [applyJob, setApplyJob] = useState(null);
   const [createJob, setCreateJob] = useState(false);
   const [newJob, setNewJob] = useState({ title: "", description: "" });
+  const [applyForm, setApplyForm] = useState({
+    name: "",
+    email: "",
+  });
 
   // Function to refresh data
   const refreshData = async () => {
@@ -35,9 +39,23 @@ const Dashboard = ({ jobsData }) => {
   const applyToJob = async (jobId) => {
     try {
       setLoading(true);
-      await fetch(`/api/apply-job/${jobId}`, {
+
+      console.log(
+        "jobId", jobId,
+        "name", applyForm.name,
+        "email" , applyForm.email,
+      )
+      await fetch(`/api/posts/apply`, {
         method: "POST",
         credentials: "include", // Include credentials with the request
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          jobId,
+          name: applyForm.name,
+          email: applyForm.email,
+        }),
       });
       refreshData(); // Refetch data to update UI
       setApplyJob(null);
@@ -47,6 +65,7 @@ const Dashboard = ({ jobsData }) => {
       setLoading(false);
     }
   };
+
 
   // Create a new job
   const createNewJob = async (e) => {
@@ -181,7 +200,7 @@ const Dashboard = ({ jobsData }) => {
       {/* Apply Job Form */}
       {applyJob && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-          <div className="bg-white p-6 rounded-lg shadow-lg">
+          <div className="bg-white p-6 rounded-lg shadow-lg text-black">
             <h2 className="text-xl font-bold">Apply for the Job</h2>
             <form
               onSubmit={(e) => {
@@ -191,13 +210,23 @@ const Dashboard = ({ jobsData }) => {
             >
               <input
                 type="text"
-                placeholder="Name"
+                placeholder="Your Name"
+                value={applyForm.name}
+                onChange={(e) =>
+                  setApplyForm({ ...applyForm, name: e.target.value })
+                }
                 className="border p-2 mb-2 w-full"
+                required
               />
               <input
                 type="email"
-                placeholder="Email"
+                placeholder="Email for further updates"
+                value={applyForm.email}
+                onChange={(e) =>
+                  setApplyForm({ ...applyForm, email: e.target.value })
+                }
                 className="border p-2 mb-2 w-full"
+                required
               />
               <button type="submit" className="bg-green-500 text-white p-2">
                 Submit Application
